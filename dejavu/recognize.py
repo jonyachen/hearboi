@@ -64,7 +64,8 @@ class MicrophoneRecognizer(BaseRecognizer):
         self.channels = channels
         self.recorded = False
         self.samplerate = samplerate
-
+	print("Start recording...")
+	
         if self.stream:
             self.stream.stop_stream()
             self.stream.close()
@@ -90,6 +91,7 @@ class MicrophoneRecognizer(BaseRecognizer):
         self.stream.close()
         self.stream = None
         self.recorded = True
+	print("Stop recording")
 
     def recognize_recording(self):
         if not self.recorded:
