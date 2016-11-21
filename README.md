@@ -1,9 +1,7 @@
 CS294-98: Interactive Device Design
 HearBoi
 ==========
-dejavu
-
-Audio fingerprinting and recognition algorithm implemented in Python
+Based on dejavu, an audio fingerprinting and recognition algorithm implemented in Python
 
 Original source code here: https://github.com/worldveil/dejavu
 
