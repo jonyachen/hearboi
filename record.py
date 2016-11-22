@@ -6,7 +6,7 @@ CHANNELS = 2
 RATE = 44100
 CHUNK = 1024
 RECORD_SECONDS = 10
-WAVE_OUTPUT_FILENAME = "clip.wav"
+WAVE_OUTPUT_FILENAME = "sounds/clip.wav"
  
 audio = pyaudio.PyAudio()
  
