@@ -1,13 +1,19 @@
 import pyaudio
 import wave
 import audioop
+import warnings
+import json
+warnings.filterwarnings("ignore")
+
+from dejavu import Dejavu
+from dejavu.recognize import FileRecognizer, MicrophoneRecognizer
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
 CHUNK = 1024
-RECORD_SECONDS = 10
-WAVE_OUTPUT_FILENAME = "sounds/clip.wav"
+RECORD_SECONDS = 5
+WAVE_OUTPUT_FILENAME = "recording.wav"
 THRESHOLD = 2000
 
 audio = pyaudio.PyAudio()
@@ -22,9 +28,9 @@ frames = []
 while True:
     data = stream.read(CHUNK)
     level = audioop.rms(data, 2)
-    print "%s" % level
+    #print "%s" % level
     if level > THRESHOLD:
-        print "%s" % level
+        #print "%s" % level
 	print "broken threshold"
 	break
 
@@ -46,3 +52,26 @@ waveFile.setsampwidth(audio.get_sample_size(FORMAT))
 waveFile.setframerate(RATE)
 waveFile.writeframes(b''.join(frames))
 waveFile.close()
+
+
+config = {
+    "database": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "passwd": "M914ktIkP!",
+        "db": "sound_db",
+    }
+}
+
+# create a Dejavu instance
+djv = Dejavu(config)
+
+# Fingerprint all the mp3's in the directory we give it
+djv.fingerprint_directory("sounds", [".wav"])
+
+# Prints total number of fingerprints - for debugging
+#print djv.db.get_num_fingerprints()
+
+# Recognize audio from a file
+song = djv.recognize(FileRecognizer, "recording.wav")
+print "From file we recognized: %s\n" % song
