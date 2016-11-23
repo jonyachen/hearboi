@@ -6,6 +6,8 @@ import pyaudio
 import wave
 import sys
 
+from dejavu import Dejavu
+
 CHUNK = 8192
 FORMAT = pyaudio.paInt16
 CHANNELS = 1L
@@ -25,6 +27,8 @@ stream = p.open(format=FORMAT,
                 input=True,
                 input_device_index= 4)
 
+
+_ = raw_input("Press any key to record")
 print("* recording")
 frames = []
 
@@ -44,3 +48,18 @@ wf.setsampwidth(p.get_sample_size(FORMAT))
 wf.setframerate(RATE)
 wf.writeframes(b''.join(frames))
 wf.close()
+
+config = {
+    "database": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "passwd": "rasp",
+        "db": "sound_db",
+    }
+}
+
+# create a Dejavu instance
+djv = Dejavu(config)
+
+# Fingerprint all the mp3's in the directory we give it
+djv.fingerprint_directory("sounds", [".wav"])
