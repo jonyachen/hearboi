@@ -6,3 +6,11 @@ Based on dejavu, an audio fingerprinting and recognition algorithm implemented i
 Original source code here: https://github.com/worldveil/dejavu
 
 http://willdrevo.com/fingerprinting-and-audio-recognition-with-python.html
+
+To Do List:
+- Modify record script to save as new audio files
+- Better threshold
+- Confidence level customization
+- Write record script to bash
+- Listening loop to go back after detection
+- Connect w web server
