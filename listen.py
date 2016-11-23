@@ -9,19 +9,20 @@ from dejavu import Dejavu
 from dejavu.recognize import FileRecognizer, MicrophoneRecognizer
 
 FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 44100
-CHUNK = 1024
+CHANNELS = 1
+RATE = 48000
+CHUNK = 8192
 RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "recording.wav"
-THRESHOLD = 2000
+THRESHOLD = 1000
 
 audio = pyaudio.PyAudio()
 
 # start Recording
 stream = audio.open(format=FORMAT, channels=CHANNELS,
                 rate=RATE, input=True,
-                frames_per_buffer=CHUNK)
+                frames_per_buffer=CHUNK,
+		input_device_index=4)
 print "listening..."
 frames = []
 
@@ -58,7 +59,7 @@ config = {
     "database": {
         "host": "127.0.0.1",
         "user": "root",
-        "passwd": "M914ktIkP!",
+        "passwd": "rasp",
         "db": "sound_db",
     }
 }
