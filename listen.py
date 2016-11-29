@@ -4,6 +4,7 @@ import audioop
 import warnings
 import json
 warnings.filterwarnings("ignore")
+import urllib2
 
 from dejavu import Dejavu
 from dejavu.recognize import FileRecognizer, MicrophoneRecognizer
@@ -76,3 +77,8 @@ djv.fingerprint_directory("sounds", [".wav"])
 # Recognize audio from a file
 song = djv.recognize(FileRecognizer, "recording.wav")
 print "From file we recognized: %s\n" % song
+
+if song:
+    print "Alerting with SMS"
+    website = 'http://ec2-54-71-180-108.us-west-2.compute.amazonaws.com/hearboi/device/sendSMS/4'
+    urllib2.urlopen(website).read()

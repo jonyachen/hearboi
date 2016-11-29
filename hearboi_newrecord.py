@@ -1,17 +1,22 @@
-mport pyaudio
+import pyaudio
 import wave
+import sys
 import urllib2
 import thread
 import time
 import requests
 
-CHUNK = 1024 
-FORMAT = pyaudio.paInt16 #paInt8
-CHANNELS = 2 
-RATE = 44100 #sample rate
-filename = "output.wav"
+CHUNK = 8192
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 48000
+RECORD_SECONDS = 5
+filename = "sounds/output.wav"
 website = 'http://ec2-54-71-180-108.us-west-2.compute.amazonaws.com/hearboi/device/record/status'
 status = 'STOP'
+
+if sys.platform == 'darwin':
+    CHANNELS = 1
 
 def recordAudio(threadname):
     global status
@@ -20,16 +25,23 @@ def recordAudio(threadname):
         p = pyaudio.PyAudio()
     
         while status=='STOP':
-            time.sleep(0.5)
+            time.sleep(1.5)
         
         print("* start recording")
-        stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK) #buffer
+        stream = p.open(format=FORMAT,
+                channels=1,
+                frames_per_buffer=CHUNK,
+                rate=RATE,
+                input=True,
+                input_device_index= 4)
+
+
+        print("* recording")
         frames = []
 
-        #for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        while(status=='START'):
+        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
             data = stream.read(CHUNK)
-            frames.append(data) # 2 bytes(16 bits) per channel
+            frames.append(data)
 
         print("* done recording")
 
@@ -45,6 +57,7 @@ def recordAudio(threadname):
         wf.close()
     
         # POST file to server
+        urllib2.urlopen("http://ec2-54-71-180-108.us-west-2.compute.amazonaws.com/hearboi/device/record/stop")
         files = {'audioFile': open(filename, 'rb')}
         uploadSite = 'http://ec2-54-71-180-108.us-west-2.compute.amazonaws.com/hearboi/device/record/upload'
         r = requests.post(uploadSite, files=files)
