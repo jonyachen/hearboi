@@ -14,3 +14,4 @@ To Do List:
 - Better threshold
 - Confidence level customization
 - Connect with LEDs
+- Make sure connectivity works for demo
