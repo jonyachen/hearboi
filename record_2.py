@@ -27,8 +27,6 @@ stream = p.open(format=FORMAT,
                 input=True,
                 input_device_index= 4)
 
-
-_ = raw_input("Press any key to record")
 print("* recording")
 frames = []
 
