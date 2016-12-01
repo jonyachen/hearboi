@@ -8,10 +8,9 @@ Original source code here: https://github.com/worldveil/dejavu
 http://willdrevo.com/fingerprinting-and-audio-recognition-with-python.html
 
 To Do List:
-- Modify record script to save as new audio files (make sure this works w name from server)
-- Better threshold
-- Confidence level customization
+- Modify record script to save as new audio files
 - Write record script to bash
 - Listening loop to go back after detection
-- Connect w web server
-- Change "song" (make sure this works)
+- Better threshold
+- Confidence level customization
+- Connect with LEDs
