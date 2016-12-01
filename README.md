@@ -14,4 +14,4 @@ To Do List:
 - Write record script to bash
 - Listening loop to go back after detection
 - Connect w web server
-Note: Tyler hasn't pushed his updated code yet - use his local version
+- Change "song"
